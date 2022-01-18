@@ -37,5 +37,13 @@ public class DataProvider implements CommandLineRunner {
         admin.setActive(true);
         admin.setAuthorities(Arrays.asList(userRole,adminRole));
         userRepository.save(admin);
+
+        UserEntity testUser = new UserEntity();
+        testUser.setNickname("TestUser");
+        testUser.setMail("test@gmail.com");
+        testUser.setPassword(passwordEncoder.encode("User"));
+        testUser.setActive(true);
+        testUser.setAuthorities(Arrays.asList(userRole));
+        userRepository.save(testUser);
     }
 }
