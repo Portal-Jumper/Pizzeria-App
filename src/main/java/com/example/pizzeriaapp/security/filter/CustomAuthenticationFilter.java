@@ -44,8 +44,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .withArrayClaim("authorities",
                         user.getAuthorities().stream().map(x -> x.getAuthority()).toArray(String[]::new))
-//                .withClaim("authorities",
-//                        user.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList()))
                 .sign(algorithm);
         response.setHeader("access_token", accessToken);
     }

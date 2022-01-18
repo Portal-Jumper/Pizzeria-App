@@ -3,15 +3,14 @@ package com.example.pizzeriaapp.controller;
 import com.example.pizzeriaapp.model.dao.users.UserEntity;
 import com.example.pizzeriaapp.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Transactional
 public class UserController {
 
     private final UserService userService;
