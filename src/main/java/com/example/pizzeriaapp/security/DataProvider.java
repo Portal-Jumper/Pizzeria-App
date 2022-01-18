@@ -22,16 +22,20 @@ public class DataProvider implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        AuthorityEntity adminRole = new AuthorityEntity();
+        adminRole.setName("ROLE_ADMIN");
+        adminRole = authorityRepository.save(adminRole);
+
         AuthorityEntity userRole = new AuthorityEntity();
-        userRole.setName("ROLE_ADMIN");
+        userRole.setName("ROLE_USER");
         userRole = authorityRepository.save(userRole);
 
-        UserEntity user = new UserEntity();
-        user.setNickname("Admin");
-        user.setMail("Admin@gmail.com");
-        user.setPassword(passwordEncoder.encode("Admin123"));
-        user.setActive(true);
-        user.setAuthorities(Arrays.asList(userRole));
-        userRepository.save(user);
+        UserEntity admin = new UserEntity();
+        admin.setNickname("Admin");
+        admin.setMail("Admin@gmail.com");
+        admin.setPassword(passwordEncoder.encode("Admin123"));
+        admin.setActive(true);
+        admin.setAuthorities(Arrays.asList(userRole,adminRole));
+        userRepository.save(admin);
     }
 }
