@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
 
 
         return User.builder()
-                .username(user.getMail())
+                .username(user.getUsername())
                 .password(user.getPassword())
                 .accountLocked(!user.isActive())
                 .authorities(user.getAuthorities()
