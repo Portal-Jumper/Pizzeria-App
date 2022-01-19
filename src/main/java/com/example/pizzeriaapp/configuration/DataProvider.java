@@ -1,4 +1,4 @@
-package com.example.pizzeriaapp.security;
+package com.example.pizzeriaapp.configuration;
 
 import com.example.pizzeriaapp.model.dao.users.AuthorityEntity;
 import com.example.pizzeriaapp.model.dao.users.UserEntity;
@@ -20,7 +20,7 @@ public class DataProvider implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         AuthorityEntity adminRole = new AuthorityEntity();
         adminRole.setName("ROLE_ADMIN");
@@ -31,7 +31,7 @@ public class DataProvider implements CommandLineRunner {
         userRole = authorityRepository.save(userRole);
 
         UserEntity admin = new UserEntity();
-        admin.setNickname("Admin");
+        admin.setUsername("Admin");
         admin.setMail("Admin@gmail.com");
         admin.setPassword(passwordEncoder.encode("Admin123"));
         admin.setActive(true);
@@ -39,7 +39,7 @@ public class DataProvider implements CommandLineRunner {
         userRepository.save(admin);
 
         UserEntity testUser = new UserEntity();
-        testUser.setNickname("TestUser");
+        testUser.setUsername("TestUser");
         testUser.setMail("test@gmail.com");
         testUser.setPassword(passwordEncoder.encode("User"));
         testUser.setActive(true);

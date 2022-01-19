@@ -1,7 +1,6 @@
 package com.example.pizzeriaapp.service;
 
 import com.example.pizzeriaapp.model.dao.users.UserEntity;
-import com.example.pizzeriaapp.repository.AuthorityRepository;
 import com.example.pizzeriaapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -27,10 +26,6 @@ public class UserService implements UserDetailsService {
         return userRepository.save(userEntity);
     }
 
-    public UserEntity getUser(String username) {
-        return userRepository.findByNicknameOrMail(username).orElseThrow(() -> new UsernameNotFoundException(username));
-    }
-
     public List<UserEntity> getUsers() {
         return userRepository.findAll();
     }
@@ -38,7 +33,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity user = userRepository.findByNicknameOrMail(username).orElseThrow(() ->
+        UserEntity user = userRepository.findByUsername(username).orElseThrow(() ->
                 new UsernameNotFoundException(username));
 
 

@@ -5,13 +5,11 @@ import com.example.pizzeriaapp.service.PizzaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@Transactional
 public class PizzaController {
 
     private final PizzaService pizzaService;

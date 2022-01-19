@@ -5,12 +5,10 @@ import com.example.pizzeriaapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Transactional
 public class UserController {
 
     private final UserService userService;

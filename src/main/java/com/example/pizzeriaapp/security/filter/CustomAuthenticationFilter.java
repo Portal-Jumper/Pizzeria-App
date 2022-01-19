@@ -11,10 +11,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -34,16 +32,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain chain, Authentication authentication)
-            throws IOException, ServletException {
+                                            FilterChain chain, Authentication authentication) {
         User user = (User)authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret");
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                .withIssuer(request.getRequestURL().toString())
                 .withArrayClaim("authorities",
                         user.getAuthorities().stream().map(x -> x.getAuthority()).toArray(String[]::new))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
         response.setHeader("access_token", accessToken);
     }
