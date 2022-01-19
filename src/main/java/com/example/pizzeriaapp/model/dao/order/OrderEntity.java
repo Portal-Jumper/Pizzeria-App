@@ -1,4 +1,4 @@
-package com.example.pizzeriaapp.model.dao.users;
+package com.example.pizzeriaapp.model.dao.order;
 
 import lombok.Data;
 
@@ -6,25 +6,24 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "orders")
 @Data
-public class UserEntity {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String password;
-    private String phoneNumber;
-    private String mail;
+
+    private String deliveryType;
     private String name;
     private String surname;
     private String street;
     private String streetNumber;
     private String City;
     private String postalCode;
-    private boolean active;
+    private String phoneNumber;
+    private Long price;
 
-    @ManyToMany
-    List<AuthorityEntity> authorities;
+    @ManyToMany(cascade = CascadeType.ALL)
+    List<OrderedPizzaEntity> orderedPizzas;
 }

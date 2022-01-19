@@ -32,16 +32,22 @@ public class DataProvider implements CommandLineRunner {
 
         UserEntity admin = new UserEntity();
         admin.setUsername("Admin");
-        admin.setMail("Admin@gmail.com");
         admin.setPassword(passwordEncoder.encode("Admin123"));
         admin.setActive(true);
-        admin.setAuthorities(Arrays.asList(userRole,adminRole));
+        admin.setAuthorities(Arrays.asList(adminRole));
         userRepository.save(admin);
 
         UserEntity testUser = new UserEntity();
-        testUser.setUsername("TestUser");
-        testUser.setMail("test@gmail.com");
-        testUser.setPassword(passwordEncoder.encode("User"));
+        testUser.setUsername("Marek12");
+        testUser.setPassword(passwordEncoder.encode("Marek12"));
+        testUser.setPhoneNumber("+48 593-123-956");
+        testUser.setMail("Marek12@gmail.com");
+        testUser.setName("Marek");
+        testUser.setSurname("Nowak");
+        testUser.setStreet("Kolejowa");
+        testUser.setStreetNumber("12/85");
+        testUser.setCity("Warszawa");
+        testUser.setPostalCode("01-205");
         testUser.setActive(true);
         testUser.setAuthorities(Arrays.asList(userRole));
         userRepository.save(testUser);

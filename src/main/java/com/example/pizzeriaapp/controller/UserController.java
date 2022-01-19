@@ -1,6 +1,7 @@
 package com.example.pizzeriaapp.controller;
 
 import com.example.pizzeriaapp.model.dao.users.UserEntity;
+import com.example.pizzeriaapp.model.dto.user.UserRequest;
 import com.example.pizzeriaapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,17 +10,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/api/users")
+    @GetMapping("/users")
     public List<UserEntity> getUsers() {
         return userService.getUsers();
     }
 
-    @PostMapping("/api/addUser")
-    public UserEntity saveUser(@RequestBody UserEntity user) {
+    @PostMapping("/addUser")
+    public UserEntity saveUser(@RequestBody UserRequest user) {
         return userService.saveUser(user);
     }
 }
