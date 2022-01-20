@@ -1,8 +1,10 @@
 package com.example.pizzeriaapp.configuration;
 
+import com.example.pizzeriaapp.model.dao.rating.RatingEntity;
 import com.example.pizzeriaapp.model.dao.users.AuthorityEntity;
 import com.example.pizzeriaapp.model.dao.users.UserEntity;
 import com.example.pizzeriaapp.repository.AuthorityRepository;
+import com.example.pizzeriaapp.repository.RatingRepository;
 import com.example.pizzeriaapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +20,7 @@ public class DataProvider implements CommandLineRunner {
     private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RatingRepository ratingRepository;
 
     @Override
     public void run(String... args) {
@@ -51,5 +54,27 @@ public class DataProvider implements CommandLineRunner {
         testUser.setActive(true);
         testUser.setAuthorities(Arrays.asList(userRole));
         userRepository.save(testUser);
+
+        RatingEntity ratingEntity = new RatingEntity();
+        ratingEntity.setPizzaId(2L);
+        ratingEntity.setGrade(3L);
+        ratingEntity.setContent("Super pizza");
+        ratingEntity.setUser("Marek12");
+        ratingRepository.save(ratingEntity);
+
+        RatingEntity ratingEntity2 = new RatingEntity();
+        ratingEntity2.setPizzaId(2L);
+        ratingEntity2.setGrade(4L);
+        ratingEntity2.setContent("Fajna pizza");
+        ratingEntity2.setUser("Marek14");
+        ratingRepository.save(ratingEntity2);
+
+        RatingEntity ratingEntity3 = new RatingEntity();
+        ratingEntity3.setPizzaId(3L);
+        ratingEntity3.setGrade(3L);
+        ratingEntity3.setContent("Super pizza");
+        ratingEntity3.setUser("Marek12");
+        ratingRepository.save(ratingEntity3);
+
     }
 }
