@@ -2,8 +2,10 @@ package com.example.pizzeriaapp.service;
 
 import com.example.pizzeriaapp.model.dao.users.UserEntity;
 import com.example.pizzeriaapp.model.dto.user.UserRequest;
+import com.example.pizzeriaapp.model.dto.user.UserResponse;
 import com.example.pizzeriaapp.repository.AuthorityRepository;
 import com.example.pizzeriaapp.repository.UserRepository;
+import com.example.pizzeriaapp.service.converters.UserConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserConverter userConverter;
 
     public UserEntity saveUser(UserRequest userRequest) {
         UserEntity user = new UserEntity();
@@ -63,5 +66,20 @@ public class UserService implements UserDetailsService {
                         .stream().map(x -> x.getName())
                         .toArray(String[]::new))
                 .build();
+    }
+
+    @Transactional
+    public UserResponse updateUser(Long id, UserRequest request){
+        UserEntity existingEntity = userRepository.findById(id).orElseThrow();
+        existingEntity.setName(request.getName().isEmpty()? existingEntity.getName() : request.getName());
+        existingEntity.setSurname(request.getSurname().isEmpty()? existingEntity.getSurname() : request.getSurname());
+        existingEntity.setUsername(request.getUsername().isEmpty()? existingEntity.getUsername() : request.getUsername());
+        existingEntity.setPhoneNumber(request.getPhoneNumber().isEmpty()? existingEntity.getPhoneNumber() : request.getPhoneNumber());
+        existingEntity.setMail(request.getMail().isEmpty()? existingEntity.getMail() : request.getMail());
+        existingEntity.setCity(request.getCity().isEmpty()? existingEntity.getCity() : request.getCity());
+        existingEntity.setPostalCode(request.getPostalCode().isEmpty()? existingEntity.getPostalCode() : request.getPostalCode());
+        existingEntity.setStreet(request.getStreet().isEmpty()? existingEntity.getStreet() : request.getStreet());
+        existingEntity.setStreetNumber(request.getStreetNumber().isEmpty()? existingEntity.getStreetNumber() : request.getStreetNumber());
+        return userConverter.convertUserEntityToDto(existingEntity);
     }
 }

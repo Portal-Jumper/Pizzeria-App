@@ -10,6 +10,7 @@ import com.example.pizzeriaapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +21,10 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
+
     public OrderEntity saveOrder(OrderRequest orderRequest) {
 
-        Long price = 0L;
+        Double price = 0.0;
 
         UserEntity user = userRepository.findByUsername(orderRequest.getUsername())
                 .orElseThrow(() -> new RuntimeException());
@@ -30,6 +32,15 @@ public class OrderService {
         for (OrderedPizza el: orderRequest.getPizzaList()) {
             price += el.getPrice();
         }
+
+        if(LocalDate.now().getDayOfWeek().name().equalsIgnoreCase("Tuesday")) {
+            price*=0.8;
+        }
+
+        if(LocalDate.now().getDayOfWeek().name().equalsIgnoreCase("Thursday")) {
+            price*=0.9;
+        }
+
 
         List<OrderedPizzaEntity> orderedPizzas = orderRequest.getPizzaList().stream()
                 .map(x -> {
@@ -52,8 +63,17 @@ public class OrderService {
         order.setPostalCode(user.getPostalCode());
         order.setPhoneNumber(user.getPhoneNumber());
         order.setPrice(price);
+        order.setUser(user);
 
         return orderRepository.save(order);
     }
 
+    public List<OrderEntity> getOrderHistoryFromUser(String name) {
+        UserEntity user = userRepository.findByUsername(name).orElseThrow(RuntimeException::new);
+        return orderRepository.findByUser(user).orElseThrow();
+    }
+
+    public List<OrderEntity> getOrderHistory() {
+        return orderRepository.findAll();
+    }
 }

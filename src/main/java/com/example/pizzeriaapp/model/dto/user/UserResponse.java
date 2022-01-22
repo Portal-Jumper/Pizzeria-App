@@ -1,10 +1,12 @@
 package com.example.pizzeriaapp.model.dto.user;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
-public class UserRequest {
-
+@Builder
+@Getter
+public class UserResponse {
+    private Long id;
     private String username;
     private String password;
     private String phoneNumber;

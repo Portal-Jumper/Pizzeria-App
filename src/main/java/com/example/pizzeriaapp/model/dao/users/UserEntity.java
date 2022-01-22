@@ -1,5 +1,6 @@
 package com.example.pizzeriaapp.model.dao.users;
 
+import com.example.pizzeriaapp.model.dao.order.OrderEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,10 +22,13 @@ public class UserEntity {
     private String surname;
     private String street;
     private String streetNumber;
-    private String City;
+    private String city;
     private String postalCode;
     private boolean active;
 
     @ManyToMany
-    List<AuthorityEntity> authorities;
+    private List<AuthorityEntity> authorities;
+
+    @OneToMany
+    private List<OrderEntity> orderHistory;
 }

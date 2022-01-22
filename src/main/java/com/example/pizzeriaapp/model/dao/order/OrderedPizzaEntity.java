@@ -16,5 +16,5 @@ public class OrderedPizzaEntity {
     Long pizzaId;
     String name;
     String size;
-    Long price;
+    Double price;
 }

@@ -8,6 +8,6 @@ public class OrderedPizza {
     Long pizzaId;
     String name;
     String size;
-    Long price;
+    Double price;
 
 }
